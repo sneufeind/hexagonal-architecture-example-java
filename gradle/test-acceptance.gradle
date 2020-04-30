@@ -1,0 +1,39 @@
+apply plugin: 'groovy'
+
+sourceSets {
+    acceptanceTest {
+        groovy {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/test-acceptance/groovy')
+        }
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/test-acceptance/java')
+        }
+        resources.srcDir file('src/test-acceptance/resources')
+    }
+}
+
+configurations {
+    acceptanceTestCompile.extendsFrom testCompile
+    acceptanceTestRuntime.extendsFrom testRuntime
+}
+
+idea {
+    module {
+        testSourceDirs += project.sourceSets.acceptanceTest.groovy.srcDirs
+        testSourceDirs += project.sourceSets.acceptanceTest.java.srcDirs
+        testSourceDirs += project.sourceSets.acceptanceTest.resources.srcDirs
+    }
+}
+
+task acceptanceTest(type: Test) {
+    description = 'Runs the acceptance tests.'
+    group 'verification'
+    systemProperties = System.properties
+    testClassesDirs = sourceSets.acceptanceTest.output.classesDirs
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
+}
+acceptanceTest.dependsOn test

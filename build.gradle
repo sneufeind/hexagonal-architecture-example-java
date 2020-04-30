@@ -1,0 +1,33 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+    id 'idea'
+}
+
+apply from: 'gradle/test-acceptance.gradle'
+
+group 'ddd.example.todo'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+    def cucumberVersion = '5.6.0'
+    def lombokVersion = '1.18.12'
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+
+    acceptanceTestImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    acceptanceTestImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+}
