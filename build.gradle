@@ -5,6 +5,7 @@ plugins {
     id 'idea'
 }
 
+apply from: 'gradle/test-architecture.gradle'
 apply from: 'gradle/test-acceptance.gradle'
 
 group 'ddd.example.todo'
@@ -17,9 +18,10 @@ allprojects {
 }
 
 dependencies {
-    def cucumberVersion = '5.6.0'
+    def dddBitsVersion = '0.0.1'
     def lombokVersion = '1.18.12'
 
+    implementation "io.hschwentner.dddbits:dddbits:${dddBitsVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
@@ -28,6 +30,12 @@ dependencies {
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 
+
+    def cucumberVersion = '5.6.0'
     acceptanceTestImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
     acceptanceTestImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+
+    architectureTestImplementation "io.hschwentner.dddbits:dddbits:${dddBitsVersion}"
+    architectureTestImplementation 'com.tngtech.archunit:archunit-junit4:0.13.1'
+    architectureTestImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
 }

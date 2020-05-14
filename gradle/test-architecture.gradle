@@ -1,0 +1,31 @@
+sourceSets {
+    architectureTest {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+            srcDir file('src/test-architecture/java')
+        }
+        resources.srcDir file('src/test-architecture/resources')
+    }
+}
+
+configurations {
+    architectureTestCompile.extendsFrom compile
+    architectureTestRuntime.extendsFrom runtime
+}
+
+idea {
+    module {
+        testSourceDirs += project.sourceSets.architectureTest.java.srcDirs
+        testSourceDirs += project.sourceSets.architectureTest.resources.srcDirs
+    }
+}
+
+task architectureTest(type: Test) {
+    description = 'Runs the architecture tests.'
+    group 'verification'
+    systemProperties = System.properties
+    testClassesDirs = sourceSets.architectureTest.output.classesDirs
+    classpath = sourceSets.architectureTest.runtimeClasspath
+}
+test.finalizedBy architectureTest
