@@ -40,6 +40,16 @@ Let's have a closer look at the operations that the husband performs to the _Bou
 ![Use Cases](docs/uml/usecases.png)
 
 
+### Event Storming
+After we identified the Bounded Context. The next step is to get more into that context. Therefore we choosed a method called `Event Storming`.
+
+![Event Storming Legend](docs/eventstorming/DDD%20Setup%20-%20DDD%20Stickies%20Template_small.jpg)
+
+![Event Storming Todo Management](docs/eventstorming/DDD%20Setup%20-%20Event%20Storming%20-%20Todo%20Management.jpg)
+
+Now it is more clear, what each command needs as input data and which domain events occur.
+
+
 ### Domain Objects
 The domain is the heart of our application and contains the entities, aggregates and value objects. In our example we had already identified the following objects:
 
@@ -95,6 +105,7 @@ To run the architecture tests there is a gradle task under `gradle/test-architec
 | --- | --- | --- |
 | Domain Storrytelling | WPS Domain Storrytelling Modeler | https://www.wps.de/modeler/ |
 | Creating Diagrams | Draw.io | https://app.diagrams.net/ |
+| Event Stroming | Miro | https://miro.com/ |
 | UML Modelling | PlantUML | https://plantuml.com/ |
 
 Links:
