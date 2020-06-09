@@ -1,7 +1,7 @@
-package todo.application.impl;
+package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
-import todo.application.AddTodo;
+import todo.application.usecase.AddTodo;
 import todo.domain.exception.MaxNumberOfTodosExceedException;
 import todo.domain.exception.TodoAlreadyExistsException;
 import todo.domain.exception.UserDoesNotExistException;
@@ -10,11 +10,11 @@ import todo.domain.model.UserId;
 import todo.domain.service.TodoService;
 
 @ApplicationService
-public class TodoAddService implements AddTodo {
+public class TodoAddImpl implements AddTodo {
 
     private final TodoService todoService;
 
-    public TodoAddService(final TodoService todoService) {
+    public TodoAddImpl(final TodoService todoService) {
         this.todoService = todoService;
     }
 

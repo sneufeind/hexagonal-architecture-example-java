@@ -1,4 +1,4 @@
-package todo.application;
+package todo.application.usecase;
 
 import common.architecture.UseCase;
 import todo.domain.exception.TodoDoesNotExistException;

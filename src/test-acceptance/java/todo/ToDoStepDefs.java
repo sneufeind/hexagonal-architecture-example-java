@@ -5,12 +5,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import todo.application.AddTodo;
-import todo.application.GetTodoDone;
-import todo.application.ReadingTodos;
-import todo.application.impl.GetTodoDoneService;
-import todo.application.impl.ReadingTodosService;
-import todo.application.impl.TodoAddService;
+import todo.application.usecase.AddTodo;
+import todo.application.usecase.GetTodoDone;
+import todo.application.usecase.ReadingTodos;
+import todo.application.service.GetTodoDoneImpl;
+import todo.application.service.ReadingTodosImpl;
+import todo.application.service.TodoAddImpl;
 import todo.domain.service.TodoService;
 import todo.domain.exception.MaxNumberOfTodosExceedException;
 import todo.domain.exception.TodoAlreadyExistsException;
@@ -42,9 +42,9 @@ public class ToDoStepDefs {
     public ToDoStepDefs(){
         this.todoListRepository = new TodoListInMemoryRepository();
         this.domainService = new TodoServiceImpl(this.todoListRepository);
-        this.addTodoUseCase = new TodoAddService(this.domainService);
-        this.getTodoDoneUseCase = new GetTodoDoneService(this.domainService);
-        this.readingTodoUseCase = new ReadingTodosService(this.domainService);
+        this.addTodoUseCase = new TodoAddImpl(this.domainService);
+        this.getTodoDoneUseCase = new GetTodoDoneImpl(this.domainService);
+        this.readingTodoUseCase = new ReadingTodosImpl(this.domainService);
         this.userId = UserId.create();
     }
 

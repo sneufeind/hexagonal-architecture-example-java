@@ -1,7 +1,7 @@
-package todo.application.impl;
+package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
-import todo.application.ReadingTodos;
+import todo.application.usecase.ReadingTodos;
 import todo.domain.model.Todo;
 import todo.domain.model.UserId;
 import todo.domain.service.TodoService;
@@ -9,11 +9,11 @@ import todo.domain.service.TodoService;
 import java.util.List;
 
 @ApplicationService
-public class ReadingTodosService implements ReadingTodos {
+public class ReadingTodosImpl implements ReadingTodos {
 
     private final TodoService todoService;
 
-    public ReadingTodosService(final TodoService todoService){
+    public ReadingTodosImpl(final TodoService todoService){
         this.todoService = todoService;
     }
 
