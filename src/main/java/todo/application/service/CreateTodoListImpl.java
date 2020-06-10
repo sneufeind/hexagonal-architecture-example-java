@@ -2,7 +2,7 @@ package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
 import lombok.NonNull;
-import todo.application.command.CreateTodoListCommand;
+import todo.domain.command.CreateTodoListCommand;
 import todo.application.usecase.CreateTodoList;
 import todo.domain.event.TodoListCreatedEvent;
 import todo.domain.exception.TodoListAlreadyExistsException;

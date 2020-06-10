@@ -1,7 +1,7 @@
 package todo.application.usecase;
 
 import common.architecture.UseCase;
-import todo.application.command.CreateTodoListCommand;
+import todo.domain.command.CreateTodoListCommand;
 import todo.domain.exception.TodoListAlreadyExistsException;
 
 @UseCase

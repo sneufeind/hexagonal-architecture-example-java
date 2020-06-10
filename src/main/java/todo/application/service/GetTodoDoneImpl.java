@@ -1,7 +1,7 @@
 package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
-import todo.application.command.GetTodoDoneCommand;
+import todo.domain.command.GetTodoDoneCommand;
 import todo.application.usecase.GetTodoDone;
 import todo.domain.event.TodoDoneEvent;
 import todo.domain.exception.UserDoesNotExistException;

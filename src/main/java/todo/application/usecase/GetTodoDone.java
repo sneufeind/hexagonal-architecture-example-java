@@ -1,7 +1,7 @@
 package todo.application.usecase;
 
 import common.architecture.UseCase;
-import todo.application.command.GetTodoDoneCommand;
+import todo.domain.command.GetTodoDoneCommand;
 import todo.domain.exception.UserDoesNotExistException;
 
 @UseCase

@@ -1,4 +1,4 @@
-package todo.application.command;
+package todo.domain.command;
 
 import common.architecture.Command;
 import lombok.NonNull;

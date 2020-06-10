@@ -1,10 +1,9 @@
 package todo.application.usecase;
 
 import common.architecture.UseCase;
-import todo.application.command.ReadTodosCommand;
+import todo.domain.command.ReadTodosCommand;
 import todo.domain.exception.UserDoesNotExistException;
 import todo.domain.model.Todo;
-import todo.domain.model.UserId;
 
 import java.util.List;
 

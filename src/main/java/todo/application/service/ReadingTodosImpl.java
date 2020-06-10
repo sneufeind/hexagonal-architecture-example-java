@@ -2,7 +2,7 @@ package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
 import lombok.NonNull;
-import todo.application.command.ReadTodosCommand;
+import todo.domain.command.ReadTodosCommand;
 import todo.application.usecase.ReadingTodos;
 import todo.domain.event.TodoAddedEvent;
 import todo.domain.event.TodoDoneEvent;

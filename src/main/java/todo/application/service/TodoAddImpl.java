@@ -2,10 +2,9 @@ package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
 import lombok.NonNull;
-import todo.application.command.AddTodoCommand;
+import todo.domain.command.AddTodoCommand;
 import todo.application.usecase.AddTodo;
 import todo.domain.event.TodoAddedEvent;
-import todo.domain.event.TodoListCreatedEvent;
 import todo.domain.exception.MaxNumberOfTodosExceedException;
 import todo.domain.exception.UserDoesNotExistException;
 import todo.domain.model.Todo;
