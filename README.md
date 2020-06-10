@@ -66,10 +66,10 @@ The identified domain objects leads us to the following structure:
 
 ![Domain Objects](docs/uml/domain-objects.png)
 
-### Onion Architecture
-We want to follow the _Onion Architecture_. There are many different diagrams out there, but for me no one makes it clear for me.
+### Clean Architecture
+We want to follow the _Clean Architecture_. There are many different diagrams out there, but for me the following one makes it more clear for me.
 
-![Onion Architecture](docs/onion_architecture/onion_architure.png)
+![Clean Architecture](docs/clean_architecture/clean_architecture.png)
 
 ### Domain Layer
 First, we're implementing the domain objects located in `domain` layer. After that we're implementing the _Domain Services_ that have access to the _Domain Repositories_, etc. These services itselves are stateless and have access to our domain objects and can let them change their states. They are also located in the `domain` layer. There are also `Ports` (interfaces) that allows us to interact with the environment, like database or an external event bus (see infrastructure layer).
@@ -113,3 +113,4 @@ Links:
 | --- | --- |
 | Domain Storrytelling Book | https://leanpub.com/domainstorytelling |
 | DDD Example | https://leasingninja.github.io/ |
+| Clean Architecture | https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html |
