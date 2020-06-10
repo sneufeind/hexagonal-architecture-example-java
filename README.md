@@ -1,20 +1,20 @@
 # Daily Family Tradegy - a Hands on Domain Driven Design & Hexagonal Architecture
 
 There are many different styles and interpretations of _Domain Driven Design_ (aka DDD) and the _Hexagonal Architecture_ (aka Onion Architecture aka Ports & Adapters) out there.
-This example should be a proof of concept how these to concepts can fit together and how _DDD_ can lead us to a clean architecture that focuses on the business.
+This example should be a proof of concept how these to concepts can fit together and how _DDD_ can lead us to a clean architecture that focuses on the business (domain).
 The intention here is not to find the best overall solution for anybody, but to find a good and clear way for me.
 
 
 
 ## Strategic Design
-The main idea of _Domain Driven Design_ is about understading the appropriate business. Therefore we'll bringt the business experts and the developer together to explain the required know-how of a business to the people that will build the software.
+The main idea of _Domain Driven Design_ is about understading the appropriate domain. Therefore we'll bringt the domain experts and the developer together to explain the required know-how of a domain to the people that will build the software.
 A good way to do this is a method called _Domain Storytelling_. The result will give us a good overview about the actors, the activities and work objects.
 The separation of the actors and processes can give us a good indicator to find a _Bounded Context_.
-One of the most important things is the _Ubiquitous Language_. This allows us to find the same words in the software that the business exports uses when telling about their business
+One of the most important things is the _Ubiquitous Language_. This allows us to find the same words in the software that the domain exports uses when telling about their domain
   
 
 ### Domain Storytelling 
-The business experts - the storrytellers - are telling a story about their business works to the developers. This story we'll be drawn by a moderator. At the end everybody we'll be able to tell this story and so about the business workflows by viewing on the drawing.
+The domain experts - the storrytellers - are telling a story about their domain works to the developers. This story we'll be drawn by a moderator. At the end everybody we'll be able to tell this story and so about the domain workflows by viewing on the drawing.
 
 
 #### The Scenario
@@ -75,7 +75,7 @@ We want to follow the _Onion Architecture_. There are many different diagrams ou
 First, we're implementing the domain objects located in `domain` layer. After that we're implementing the _Domain Services_ that have access to the _Domain Repositories_, etc. These services itselves are stateless and have access to our domain objects and can let them change their states. They are also located in the `domain` layer. There are also `Ports` (interfaces) that allows us to interact with the environment, like database or an external event bus (see infrastructure layer).
 
 ### Application Layer
-In the `application` layer there are only two different types. The first one are interfaces and are called `Use Cases`. It describes how an actor would interact with our business software. The second are `Application Services` that are implementing the Use Cases and orchestrating the business logic.
+In the `application` layer there are only two different types. The first one are interfaces and are called `Use Cases`. It describes how an actor would interact with our domain software. The second are `Application Services` that are implementing the Use Cases and orchestrating the domain logic.
 
 
 Until here there is no need are any framework or third party libary. Keep your `domain` and your `application` layer clean!
