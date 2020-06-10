@@ -1,10 +1,10 @@
 package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
+import todo.application.command.GetTodoDoneCommand;
 import todo.application.usecase.GetTodoDone;
 import todo.domain.event.TodoDoneEvent;
 import todo.domain.exception.UserDoesNotExistException;
-import todo.domain.model.TodoId;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
 import todo.domain.port.LoadTodoListPort;
@@ -24,13 +24,13 @@ public class GetTodoDoneImpl implements GetTodoDone {
     }
 
     @Override
-    public void getTodoDone(final UserId userId, final TodoId todoId) throws UserDoesNotExistException {
-        final TodoList todoList = todoList(userId);
+    public void getTodoDone(final GetTodoDoneCommand command) throws UserDoesNotExistException {
+        final TodoList todoList = todoList(command.getUserId());
 
-        todoList.getTodoDone(todoId);
+        todoList.getTodoDone(command.getTodoId());
 
         this.saveTodoListPort.save(todoList);
-        publishTodoDoneEvent(new TodoDoneEvent(userId, todoId) );
+        publishTodoDoneEvent(new TodoDoneEvent(command.getUserId(), command.getTodoId()) );
     }
 
     private void publishTodoDoneEvent(final TodoDoneEvent event) {

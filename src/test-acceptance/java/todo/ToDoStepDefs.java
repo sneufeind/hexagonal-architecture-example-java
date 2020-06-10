@@ -7,6 +7,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import todo.application.command.AddTodoCommand;
 import todo.application.command.CreateTodoListCommand;
+import todo.application.command.GetTodoDoneCommand;
+import todo.application.command.ReadTodosCommand;
 import todo.application.service.CreateTodoListImpl;
 import todo.application.service.GetTodoDoneImpl;
 import todo.application.service.ReadingTodosImpl;
@@ -49,9 +51,9 @@ public class ToDoStepDefs {
     }
 
     @Given("an empty list")
-    public void anEmptyList() throws TodoListAlreadyExistsException {
+    public void anEmptyList() throws TodoListAlreadyExistsException, UserDoesNotExistException {
         initTodoList(this.userId);
-        assertTrue(this.readingTodoUseCase.getAllUndoneTodos(this.userId).isEmpty());
+        assertTrue(this.readingTodoUseCase.getAllUndoneTodos(ReadTodosCommand.of(this.userId)).isEmpty());
     }
 
     @Given("a list with the following todos:")
@@ -78,14 +80,14 @@ public class ToDoStepDefs {
     }
 
     @When("the user asks for his todos")
-    public void theUserAsksForHisTodos() {
-        this.readingTodoUseCase.getAllUndoneTodos(this.userId);
+    public void theUserAsksForHisTodos() throws UserDoesNotExistException {
+        this.readingTodoUseCase.getAllUndoneTodos(ReadTodosCommand.of(this.userId));
     }
 
     @When("the todo {string} is done")
     public void theTodoIsDone(final String todoDescription) throws UserDoesNotExistException {
         final Todo todo = findByDescription(todoDescription);
-        this.getTodoDoneUseCase.getTodoDone(this.userId, todo.getId());
+        this.getTodoDoneUseCase.getTodoDone(GetTodoDoneCommand.of(this.userId, todo.getId()));
     }
 
     @Then("this todo will be added to the list")

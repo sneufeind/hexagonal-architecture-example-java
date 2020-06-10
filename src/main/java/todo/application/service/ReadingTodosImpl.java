@@ -1,10 +1,13 @@
 package todo.application.service;
 
 import io.hschwentner.dddbits.annotation.ApplicationService;
+import lombok.NonNull;
+import todo.application.command.ReadTodosCommand;
 import todo.application.usecase.ReadingTodos;
 import todo.domain.event.TodoAddedEvent;
 import todo.domain.event.TodoDoneEvent;
 import todo.domain.event.TodoListCreatedEvent;
+import todo.domain.exception.UserDoesNotExistException;
 import todo.domain.model.Todo;
 import todo.domain.model.UserId;
 import todo.domain.port.LoadTodoListPort;
@@ -32,9 +35,12 @@ public class ReadingTodosImpl implements ReadingTodos {
     }
 
     @Override
-    public List<Todo> getAllUndoneTodos(final UserId userId) {
+    public List<Todo> getAllUndoneTodos(@NonNull final ReadTodosCommand command) throws UserDoesNotExistException {
         initUndoneTodoRepository(); // TODO remove this when using an event bus
-        return Collections.unmodifiableList(this.undoneTodoRepository.get(userId));
+        if( !this.undoneTodoRepository.containsKey(command.getUserId()) ) {
+            throw new UserDoesNotExistException(command.getUserId());
+        }
+        return Collections.unmodifiableList(this.undoneTodoRepository.get(command.getUserId()));
     }
 
     // TODO subscribe to an eventbus

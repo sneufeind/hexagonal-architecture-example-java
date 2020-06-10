@@ -1,12 +1,11 @@
 package todo.application.usecase;
 
 import common.architecture.UseCase;
+import todo.application.command.GetTodoDoneCommand;
 import todo.domain.exception.UserDoesNotExistException;
-import todo.domain.model.TodoId;
-import todo.domain.model.UserId;
 
 @UseCase
 public interface GetTodoDone {
 
-    void getTodoDone(UserId userId, TodoId todoId) throws UserDoesNotExistException;
+    void getTodoDone(GetTodoDoneCommand command) throws UserDoesNotExistException;
 }
