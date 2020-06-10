@@ -5,24 +5,24 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import todo.application.usecase.AddTodo;
-import todo.application.usecase.GetTodoDone;
-import todo.application.usecase.ReadingTodos;
+import todo.application.command.AddTodoCommand;
+import todo.application.command.CreateTodoListCommand;
+import todo.application.service.CreateTodoListImpl;
 import todo.application.service.GetTodoDoneImpl;
 import todo.application.service.ReadingTodosImpl;
 import todo.application.service.TodoAddImpl;
-import todo.domain.service.TodoService;
+import todo.application.usecase.AddTodo;
+import todo.application.usecase.CreateTodoList;
+import todo.application.usecase.GetTodoDone;
+import todo.application.usecase.ReadingTodos;
 import todo.domain.exception.MaxNumberOfTodosExceedException;
-import todo.domain.exception.TodoAlreadyExistsException;
-import todo.domain.exception.TodoDoesNotExistException;
+import todo.domain.exception.TodoListAlreadyExistsException;
 import todo.domain.exception.UserDoesNotExistException;
 import todo.domain.model.Todo;
 import todo.domain.model.TodoId;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
-import todo.domain.port.TodoListRepsitory;
-import todo.domain.service.impl.TodoServiceImpl;
-import todo.infrastructure.adapter.db.TodoListInMemoryRepository;
+import todo.infrastructure.adapter.db.TodoListListInMemoryRepository;
 
 import java.util.function.Function;
 
@@ -30,9 +30,9 @@ import static org.junit.Assert.*;
 
 public class ToDoStepDefs {
 
-    private final TodoListRepsitory todoListRepository;
-    private final TodoService domainService;
+    private final TodoListListInMemoryRepository todoListRepository;
     private final AddTodo addTodoUseCase;
+    private final CreateTodoList createTodoListUseCase;
     private final GetTodoDone getTodoDoneUseCase;
     private final ReadingTodos readingTodoUseCase;
     private final UserId userId;
@@ -40,27 +40,27 @@ public class ToDoStepDefs {
     private Todo todo;
 
     public ToDoStepDefs(){
-        this.todoListRepository = new TodoListInMemoryRepository();
-        this.domainService = new TodoServiceImpl(this.todoListRepository);
-        this.addTodoUseCase = new TodoAddImpl(this.domainService);
-        this.getTodoDoneUseCase = new GetTodoDoneImpl(this.domainService);
-        this.readingTodoUseCase = new ReadingTodosImpl(this.domainService);
+        this.todoListRepository = new TodoListListInMemoryRepository();
+        this.addTodoUseCase = new TodoAddImpl(this.todoListRepository, this.todoListRepository);
+        this.createTodoListUseCase = new CreateTodoListImpl(this.todoListRepository, this.todoListRepository);
+        this.getTodoDoneUseCase = new GetTodoDoneImpl(this.todoListRepository, this.todoListRepository);
+        this.readingTodoUseCase = new ReadingTodosImpl(this.todoListRepository);
         this.userId = UserId.create();
     }
 
     @Given("an empty list")
-    public void anEmptyList() {
-        this.domainService.initTodoList(this.userId);
+    public void anEmptyList() throws TodoListAlreadyExistsException {
+        initTodoList(this.userId);
         assertTrue(this.readingTodoUseCase.getAllUndoneTodos(this.userId).isEmpty());
     }
 
     @Given("a list with the following todos:")
     public void aListWithTheFollowingTodos(final DataTable table) {
-        this.domainService.initTodoList(this.userId);
+        this.todoListRepository.save(TodoList.create(this.userId));
         table.asList().forEach(data -> {
             try {
-                this.addTodoUseCase.addTodo(this.userId, data);
-            } catch (final MaxNumberOfTodosExceedException | TodoAlreadyExistsException e) {
+                this.addTodoUseCase.addTodo(AddTodoCommand.of(this.userId, data));
+            } catch (final MaxNumberOfTodosExceedException | UserDoesNotExistException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -68,13 +68,13 @@ public class ToDoStepDefs {
     }
 
     @When("user adds a new todo")
-    public void userAddsANewTodo() throws MaxNumberOfTodosExceedException, TodoAlreadyExistsException {
-        this.todo = findById( this.addTodoUseCase.addTodo(this.userId, "Create a good Example") );
+    public void userAddsANewTodo() throws MaxNumberOfTodosExceedException, UserDoesNotExistException {
+        this.todo = findById( this.addTodoUseCase.addTodo(AddTodoCommand.of(this.userId, "Create a good Example")) );
     }
 
     @And("tries to add this todo again")
-    public void triesToAddThisTodoAgain() throws MaxNumberOfTodosExceedException, TodoAlreadyExistsException {
-        this.addTodoUseCase.addTodo(this.userId, this.todo.getDescription());
+    public void triesToAddThisTodoAgain() throws MaxNumberOfTodosExceedException, UserDoesNotExistException {
+        this.addTodoUseCase.addTodo(AddTodoCommand.of(this.userId, this.todo.getDescription()));
     }
 
     @When("the user asks for his todos")
@@ -83,7 +83,7 @@ public class ToDoStepDefs {
     }
 
     @When("the todo {string} is done")
-    public void theTodoIsDone(final String todoDescription) throws TodoDoesNotExistException, UserDoesNotExistException {
+    public void theTodoIsDone(final String todoDescription) throws UserDoesNotExistException {
         final Todo todo = findByDescription(todoDescription);
         this.getTodoDoneUseCase.getTodoDone(this.userId, todo.getId());
     }
@@ -112,6 +112,11 @@ public class ToDoStepDefs {
         assertFalse(this.todo.isDone());
     }
 
+    private void initTodoList(final UserId userId) throws TodoListAlreadyExistsException {
+        this.createTodoListUseCase.createTodoList(CreateTodoListCommand.of(userId));
+        assertTrue(this.todoListRepository.findById(userId).isPresent());
+    }
+
     private Todo findById(final TodoId id){
         return findBy(t -> t.getId().equals(id));
     }
@@ -129,6 +134,6 @@ public class ToDoStepDefs {
     }
 
     private void assertNumberOfToDos(final int expectedNumber){
-        assertEquals(expectedNumber, this.domainService.undoneTodos(this.userId).size());
+        assertEquals(expectedNumber, this.todoListRepository.findById(this.userId).get().countUndoneTodos());
     }
 }

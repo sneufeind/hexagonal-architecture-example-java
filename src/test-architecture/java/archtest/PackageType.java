@@ -4,6 +4,7 @@ public enum PackageType {
 
     APPLICATION_ROOT("..application"),
     APPLICATION_SERVICE("..application.service"),
+    APPLICATION_USECASE("..application.usecase"),
     DOMAIN_EVENT("..domain.event"),
     DOMAIN_EXCEPTION("..domain.exception"),
     DOMAIN_MODEL("..domain.model"),

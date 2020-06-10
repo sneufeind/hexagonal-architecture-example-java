@@ -1,6 +1,7 @@
 package todo.domain.event;
 
 import io.hschwentner.dddbits.annotation.DomainEvent;
+import lombok.NonNull;
 import lombok.Value;
 import todo.domain.model.TodoId;
 import todo.domain.model.UserId;
@@ -9,6 +10,6 @@ import todo.domain.model.UserId;
 @Value
 public class TodoDoneEvent {
 
-    private final UserId userId;
-    private final TodoId todoId;
+    @NonNull UserId userId;
+    @NonNull TodoId todoId;
 }

@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
-import todo.domain.port.TodoListRepsitory;
 
 import java.util.Optional;
 
@@ -13,11 +12,11 @@ import static org.junit.Assert.assertTrue;
 
 public class TodoListInMemoryRepositoryTest {
 
-    private TodoListRepsitory repsitory;
+    private TodoListListInMemoryRepository repsitory;
 
     @Before
     public void setUp() {
-        this.repsitory = new TodoListInMemoryRepository();
+        this.repsitory = new TodoListListInMemoryRepository();
     }
 
     @Test

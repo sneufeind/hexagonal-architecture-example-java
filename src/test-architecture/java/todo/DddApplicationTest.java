@@ -6,6 +6,7 @@ import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.junit.ArchUnitRunner;
 import com.tngtech.archunit.lang.ArchRule;
 import common.architecture.UseCase;
+import io.hschwentner.dddbits.annotation.ApplicationService;
 import org.junit.runner.RunWith;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -17,8 +18,14 @@ public class DddApplicationTest {
     @ArchTest
     static final ArchRule useCasesMustBeAnnotatedWithUseCase =
             classes()
-                    .that().resideInAnyPackage(PackageType.APPLICATION_SERVICE.recursive())
+                    .that().resideInAnyPackage(PackageType.APPLICATION_USECASE.recursive())
                     .should().beAnnotatedWith(UseCase.class);
+
+    @ArchTest
+    static final ArchRule applicationServicesMustBeAnnotatedWithApplicationService =
+            classes()
+                    .that().resideInAnyPackage(PackageType.APPLICATION_SERVICE.recursive())
+                    .should().beAnnotatedWith(ApplicationService.class);
 
     @ArchTest
     static final ArchRule applicationServiceMustImplementUseCases =

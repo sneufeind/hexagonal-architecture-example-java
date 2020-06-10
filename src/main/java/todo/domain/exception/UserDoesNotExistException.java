@@ -5,6 +5,6 @@ import todo.domain.model.UserId;
 public class UserDoesNotExistException extends Exception {
 
     public UserDoesNotExistException(final UserId id) {
-        super(String.format("User with id='%s' already exists!", id.getId().toString()));
+        super(String.format("User with id='%s' does not exist!", id.getId().toString()));
     }
 }
