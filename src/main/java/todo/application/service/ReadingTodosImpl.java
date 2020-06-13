@@ -43,21 +43,18 @@ public class ReadingTodosImpl implements ReadingTodos {
         return Collections.unmodifiableList(this.undoneTodoRepository.get(command.getUserId()));
     }
 
-    // TODO subscribe to an eventbus
-    private void receiveTodoAddedEvent(final TodoAddedEvent event) {
+    public void on(final TodoAddedEvent event) {
         this.undoneTodoRepository.get(event.getUserId()).add(event.getTodo());
     }
 
-    // TODO subscribe to an eventbus
-    private void receiveTodoDoneEvent(final TodoDoneEvent event) {
+    public void on(final TodoDoneEvent event) {
         final List<Todo> todos = this.undoneTodoRepository.get(event.getUserId());
         this.undoneTodoRepository.put(event.getUserId(), todos.stream()
                 .filter(t -> !t.getId().equals(event.getTodoId()) )
                 .collect(Collectors.toList()) );
     }
 
-    // TODO subscribe to an eventbus
-    private void receiveTodoListCreatedEvent(final TodoListCreatedEvent event) {
+    public void on(final TodoListCreatedEvent event) {
         this.undoneTodoRepository.put(event.getUserId(), new LinkedList<>());
     }
 }

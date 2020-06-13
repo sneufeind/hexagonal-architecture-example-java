@@ -22,6 +22,8 @@ dependencies {
     def lombokVersion = '1.18.12'
 
     implementation "io.hschwentner.dddbits:dddbits:${dddBitsVersion}"
+    implementation "com.google.guava:guava:29.0-jre"
+    implementation "javax.annotation:javax.annotation-api:1.3.2"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
@@ -34,6 +36,7 @@ dependencies {
     def cucumberVersion = '5.6.0'
     acceptanceTestImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
     acceptanceTestImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    acceptanceTestImplementation "com.google.guava:guava:29.0-jre"
 
     architectureTestImplementation "io.hschwentner.dddbits:dddbits:${dddBitsVersion}"
     architectureTestImplementation 'com.tngtech.archunit:archunit-junit4:0.13.1'

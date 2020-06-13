@@ -1,14 +1,13 @@
 package todo;
 
+import com.google.common.eventbus.DeadEvent;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import todo.domain.command.AddTodoCommand;
-import todo.domain.command.CreateTodoListCommand;
-import todo.domain.command.GetTodoDoneCommand;
-import todo.domain.command.ReadTodosCommand;
 import todo.application.service.CreateTodoListImpl;
 import todo.application.service.GetTodoDoneImpl;
 import todo.application.service.ReadingTodosImpl;
@@ -16,7 +15,10 @@ import todo.application.service.TodoAddImpl;
 import todo.application.usecase.AddTodo;
 import todo.application.usecase.CreateTodoList;
 import todo.application.usecase.GetTodoDone;
-import todo.application.usecase.ReadingTodos;
+import todo.domain.command.AddTodoCommand;
+import todo.domain.command.CreateTodoListCommand;
+import todo.domain.command.GetTodoDoneCommand;
+import todo.domain.command.ReadTodosCommand;
 import todo.domain.exception.MaxNumberOfTodosExceedException;
 import todo.domain.exception.TodoListAlreadyExistsException;
 import todo.domain.exception.UserDoesNotExistException;
@@ -24,30 +26,55 @@ import todo.domain.model.Todo;
 import todo.domain.model.TodoId;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
+import todo.domain.port.*;
 import todo.infrastructure.adapter.db.TodoListListInMemoryRepository;
+import todo.infrastructure.adapter.events.*;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 import static org.junit.Assert.*;
 
 public class ToDoStepDefs {
 
+    private final AtomicInteger deadEventCounter = new AtomicInteger(0);
     private final TodoListListInMemoryRepository todoListRepository;
     private final AddTodo addTodoUseCase;
     private final CreateTodoList createTodoListUseCase;
     private final GetTodoDone getTodoDoneUseCase;
-    private final ReadingTodos readingTodoUseCase;
+    private final ReadingTodosImpl readingTodoUseCase;
     private final UserId userId;
 
     private Todo todo;
 
     public ToDoStepDefs(){
+        final EventBus eventBus = new EventBus();
+        eventBus.register(this); // for dead events
+
         this.todoListRepository = new TodoListListInMemoryRepository();
-        this.addTodoUseCase = new TodoAddImpl(this.todoListRepository, this.todoListRepository);
-        this.createTodoListUseCase = new CreateTodoListImpl(this.todoListRepository, this.todoListRepository);
-        this.getTodoDoneUseCase = new GetTodoDoneImpl(this.todoListRepository, this.todoListRepository);
+
         this.readingTodoUseCase = new ReadingTodosImpl(this.todoListRepository);
+
+        final SendTodoAddedEventPort sendTodoAddedEventPort = new SendTodoAddedEventGuavaAdapter(eventBus);
+        final SendTodoDoneEventPort sendTodoDoneEventPort = new SendTodoDoneEventGuavaAdapter(eventBus);
+        final SendTodoListCreatedEventPort sendTodoListCreatedEventPort = new SendTodoListCreatedEventGuavaAdapter(eventBus);
+
+        final ReceiveTodoAddedEventPort receiveTodoAddedEventPort = new ReceiveTodoAddedEventGuavaAdapter(eventBus, this.readingTodoUseCase::on);
+        final ReceiveTodoDoneEventPort receiveTodoDoneEventPort = new ReceiveTodoDoneEventGuavaAdapter(eventBus, this.readingTodoUseCase::on);
+        final ReceiveTodoListCreatedEventPort receiveTodoListCreatedEventPort = new ReceiveTodoListCreatedEventGuavaAdapter(eventBus, this.readingTodoUseCase::on);
+
+        this.addTodoUseCase = new TodoAddImpl(this.todoListRepository, this.todoListRepository, sendTodoAddedEventPort);
+        this.createTodoListUseCase = new CreateTodoListImpl(this.todoListRepository, this.todoListRepository, sendTodoListCreatedEventPort);
+        this.getTodoDoneUseCase = new GetTodoDoneImpl(this.todoListRepository, this.todoListRepository, sendTodoDoneEventPort);
         this.userId = UserId.create();
+    }
+
+    @Subscribe
+    public void on(final DeadEvent event){
+        this.deadEventCounter.incrementAndGet();
     }
 
     @Given("an empty list")
@@ -93,6 +120,7 @@ public class ToDoStepDefs {
     @Then("this todo will be added to the list")
     public void thisTodoWillBeAddedToTheList() {
         assertNotNull( findById(this.todo.getId()) );
+        ensureNoDomainEventsHadBeenIgnored();
     }
 
     @Then("this todo will be added twice")
@@ -102,16 +130,22 @@ public class ToDoStepDefs {
                 .filter(e -> e.getDescription().equals(this.todo.getDescription()))
                 .count();
         assertEquals(2, count);
+        ensureNoDomainEventsHadBeenIgnored();
     }
 
     @Then("the list contains {int} todos")
     public void theListContainsTodos(final int expectedNumberOfToDos) {
         assertNumberOfToDos(expectedNumberOfToDos);
+        ensureNoDomainEventsHadBeenIgnored();
     }
 
     @And("this todo will be unchecked")
     public void thisTodoWillBeUnchecked() {
         assertFalse(this.todo.isDone());
+    }
+
+    private void ensureNoDomainEventsHadBeenIgnored(){
+        assertEquals(0, this.deadEventCounter.get());
     }
 
     private void initTodoList(final UserId userId) throws TodoListAlreadyExistsException {

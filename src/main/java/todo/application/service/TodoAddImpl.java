@@ -13,6 +13,7 @@ import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
 import todo.domain.port.LoadTodoListPort;
 import todo.domain.port.SaveTodoListPort;
+import todo.domain.port.SendTodoAddedEventPort;
 
 import java.util.Optional;
 
@@ -23,10 +24,16 @@ public class TodoAddImpl implements AddTodo {
 
     private final LoadTodoListPort loadTodoListPort;
     private final SaveTodoListPort saveTodoListPort;
+    private final SendTodoAddedEventPort sendTodoAddedEventPort;
 
-    public TodoAddImpl(final LoadTodoListPort loadTodoListPort, final SaveTodoListPort saveTodoListPort) {
+    public TodoAddImpl(
+            final LoadTodoListPort loadTodoListPort,
+            final SaveTodoListPort saveTodoListPort,
+            final SendTodoAddedEventPort sendTodoAddedEventPort
+    ) {
         this.loadTodoListPort = loadTodoListPort;
         this.saveTodoListPort = saveTodoListPort;
+        this.sendTodoAddedEventPort = sendTodoAddedEventPort;
     }
 
     @Override
@@ -51,8 +58,8 @@ public class TodoAddImpl implements AddTodo {
         return opt.get();
     }
 
-    private void publishTodoAddedEvent(final TodoAddedEvent event) {
-        // TODO use Event Bus here
+    private void publishTodoAddedEvent(@NonNull final TodoAddedEvent event) {
+        this.sendTodoAddedEventPort.send(event);
     }
 
     private static void checkIfMaxNumberOfUndoneTodosExceeded(final int numberOfUndoneTodos) throws MaxNumberOfTodosExceedException {

@@ -10,16 +10,19 @@ import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
 import todo.domain.port.LoadTodoListPort;
 import todo.domain.port.SaveTodoListPort;
+import todo.domain.port.SendTodoListCreatedEventPort;
 
 @ApplicationService
 public class CreateTodoListImpl implements CreateTodoList {
 
     private final LoadTodoListPort loadTodoListPort;
     private final SaveTodoListPort saveTodoListPort;
+    private final SendTodoListCreatedEventPort sendTodoListCreatedEventPort;
 
-    public CreateTodoListImpl(final LoadTodoListPort loadTodoListPort, final SaveTodoListPort saveTodoListPort){
+    public CreateTodoListImpl(final LoadTodoListPort loadTodoListPort, final SaveTodoListPort saveTodoListPort, final SendTodoListCreatedEventPort sendTodoListCreatedEventPort){
         this.loadTodoListPort = loadTodoListPort;
         this.saveTodoListPort = saveTodoListPort;
+        this.sendTodoListCreatedEventPort = sendTodoListCreatedEventPort;
     }
 
     @Override
@@ -39,6 +42,6 @@ public class CreateTodoListImpl implements CreateTodoList {
     }
 
     private void publishTodoListCreatedEvent(final TodoListCreatedEvent event) {
-        // TODO use Event Bus here
+        this.sendTodoListCreatedEventPort.send(event);
     }
 }
