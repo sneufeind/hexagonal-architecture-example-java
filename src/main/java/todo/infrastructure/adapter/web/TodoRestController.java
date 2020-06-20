@@ -1,5 +1,6 @@
 package todo.infrastructure.adapter.web;
 
+import common.architecture.Adapter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import todo.infrastructure.adapter.web.model.*;
 import java.util.List;
 import java.util.function.Supplier;
 
+@Adapter
 @RestController
 @RequestMapping( value = "/api/todolist"
         , consumes = MediaType.APPLICATION_JSON_VALUE

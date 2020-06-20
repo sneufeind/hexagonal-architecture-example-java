@@ -14,7 +14,8 @@ public class OnionArchitecture implements ArchRule {
     private enum LayerType {
         APPLICATION,
         DOMAIN,
-        INFRASTRUCTURE
+        INFRASTRUCTURE,
+        CONFIG
     }
 
     private Map<LayerType, Collection<String>> layerIdentifiers = new HashMap<>();
@@ -47,6 +48,11 @@ public class OnionArchitecture implements ArchRule {
         return this;
     }
 
+    public OnionArchitecture configPackage(final String packageName){
+        addLayerIdentifier(packageName, LayerType.CONFIG);
+        return this;
+    }
+
     private static String[] asArray(final Collection<String> list){
         return list.toArray(new String[list.size()]);
     }
@@ -60,10 +66,12 @@ public class OnionArchitecture implements ArchRule {
         layer(layeredArchitecture, this.layerIdentifiers, LayerType.APPLICATION);
         layer(layeredArchitecture, this.layerIdentifiers, LayerType.DOMAIN);
         layer(layeredArchitecture, this.layerIdentifiers, LayerType.INFRASTRUCTURE);
+        layer(layeredArchitecture, this.layerIdentifiers, LayerType.CONFIG);
         layeredArchitecture
-                .whereLayer(LayerType.DOMAIN.name()).mayOnlyBeAccessedByLayers(LayerType.APPLICATION.name(), LayerType.INFRASTRUCTURE.name())
-                .whereLayer(LayerType.APPLICATION.name()).mayOnlyBeAccessedByLayers(LayerType.INFRASTRUCTURE.name())
-                .whereLayer(LayerType.INFRASTRUCTURE.name()).mayNotBeAccessedByAnyLayer()
+                .whereLayer(LayerType.DOMAIN.name()).mayOnlyBeAccessedByLayers(LayerType.APPLICATION.name(), LayerType.INFRASTRUCTURE.name(), LayerType.CONFIG.name())
+                .whereLayer(LayerType.APPLICATION.name()).mayOnlyBeAccessedByLayers(LayerType.INFRASTRUCTURE.name(), LayerType.CONFIG.name())
+                .whereLayer(LayerType.INFRASTRUCTURE.name()).mayOnlyBeAccessedByLayers(LayerType.CONFIG.name())
+                .whereLayer(LayerType.CONFIG.name()).mayNotBeAccessedByAnyLayer()
                 .withOptionalLayers(false)
         ;
         return layeredArchitecture;

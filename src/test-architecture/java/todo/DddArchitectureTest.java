@@ -26,7 +26,8 @@ public class DddArchitectureTest {
             new OnionArchitecture()
                     .applicationPackage(PackageType.APPLICATION_ROOT.recursive())
                     .domainPackage(PackageType.DOMAIN_ROOT.recursive())
-                    .infrastructurePackage(PackageType.INFRASTRUCTURE_ROOT.recursive());
+                    .infrastructurePackage(PackageType.INFRASTRUCTURE_ROOT.recursive())
+                    .configPackage(PackageType.CONFIG_ROOT.recursive());
 
     @ArchTest
     static final ArchRule usecasesShouldBeAnnotatedInterfaces =

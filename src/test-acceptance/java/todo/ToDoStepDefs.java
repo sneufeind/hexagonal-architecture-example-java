@@ -8,10 +8,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import todo.application.service.AddTodoImpl;
 import todo.application.service.CreateTodoListImpl;
 import todo.application.service.GetTodoDoneImpl;
 import todo.application.service.ReadingTodosImpl;
-import todo.application.service.AddTodoImpl;
 import todo.application.usecase.AddTodo;
 import todo.application.usecase.CreateTodoList;
 import todo.application.usecase.GetTodoDone;
@@ -29,9 +29,6 @@ import todo.domain.model.UserId;
 import todo.domain.port.*;
 import todo.infrastructure.adapter.db.TodoListListInMemoryRepository;
 import todo.infrastructure.adapter.events.*;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -55,9 +52,6 @@ public class ToDoStepDefs {
         eventBus.register(this); // for dead events
 
         this.todoListRepository = new TodoListListInMemoryRepository();
-        this.addTodoUseCase = new AddTodoImpl(this.todoListRepository, this.todoListRepository);
-        this.createTodoListUseCase = new CreateTodoListImpl(this.todoListRepository, this.todoListRepository);
-        this.getTodoDoneUseCase = new GetTodoDoneImpl(this.todoListRepository, this.todoListRepository);
 
         this.readingTodoUseCase = new ReadingTodosImpl(this.todoListRepository);
 
@@ -69,7 +63,7 @@ public class ToDoStepDefs {
         final ReceiveTodoDoneEventPort receiveTodoDoneEventPort = new ReceiveTodoDoneEventGuavaAdapter(eventBus, this.readingTodoUseCase::on);
         final ReceiveTodoListCreatedEventPort receiveTodoListCreatedEventPort = new ReceiveTodoListCreatedEventGuavaAdapter(eventBus, this.readingTodoUseCase::on);
 
-        this.addTodoUseCase = new TodoAddImpl(this.todoListRepository, this.todoListRepository, sendTodoAddedEventPort);
+        this.addTodoUseCase = new AddTodoImpl(this.todoListRepository, this.todoListRepository, sendTodoAddedEventPort);
         this.createTodoListUseCase = new CreateTodoListImpl(this.todoListRepository, this.todoListRepository, sendTodoListCreatedEventPort);
         this.getTodoDoneUseCase = new GetTodoDoneImpl(this.todoListRepository, this.todoListRepository, sendTodoDoneEventPort);
         this.userId = UserId.create();
