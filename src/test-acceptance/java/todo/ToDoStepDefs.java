@@ -12,7 +12,7 @@ import todo.domain.command.ReadTodosCommand;
 import todo.application.service.CreateTodoListImpl;
 import todo.application.service.GetTodoDoneImpl;
 import todo.application.service.ReadingTodosImpl;
-import todo.application.service.TodoAddImpl;
+import todo.application.service.AddTodoImpl;
 import todo.application.usecase.AddTodo;
 import todo.application.usecase.CreateTodoList;
 import todo.application.usecase.GetTodoDone;
@@ -43,7 +43,7 @@ public class ToDoStepDefs {
 
     public ToDoStepDefs(){
         this.todoListRepository = new TodoListListInMemoryRepository();
-        this.addTodoUseCase = new TodoAddImpl(this.todoListRepository, this.todoListRepository);
+        this.addTodoUseCase = new AddTodoImpl(this.todoListRepository, this.todoListRepository);
         this.createTodoListUseCase = new CreateTodoListImpl(this.todoListRepository, this.todoListRepository);
         this.getTodoDoneUseCase = new GetTodoDoneImpl(this.todoListRepository, this.todoListRepository);
         this.readingTodoUseCase = new ReadingTodosImpl(this.todoListRepository);

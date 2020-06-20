@@ -17,6 +17,11 @@ public class UserId {
     }
 
     public static UserId create(){
-        return new UserId(UUID.randomUUID());
+        return of(UUID.randomUUID());
     }
+
+    public static UserId of(@NonNull final UUID id){
+        return new UserId(id);
+    }
+
 }

@@ -17,14 +17,14 @@ import todo.domain.port.SaveTodoListPort;
 import java.util.Optional;
 
 @ApplicationService
-public class TodoAddImpl implements AddTodo {
+public class AddTodoImpl implements AddTodo {
 
     private static final int MAX_NUMBER_OF_TODOS = 5; // application specific rule
 
     private final LoadTodoListPort loadTodoListPort;
     private final SaveTodoListPort saveTodoListPort;
 
-    public TodoAddImpl(final LoadTodoListPort loadTodoListPort, final SaveTodoListPort saveTodoListPort) {
+    public AddTodoImpl(final LoadTodoListPort loadTodoListPort, final SaveTodoListPort saveTodoListPort) {
         this.loadTodoListPort = loadTodoListPort;
         this.saveTodoListPort = saveTodoListPort;
     }
