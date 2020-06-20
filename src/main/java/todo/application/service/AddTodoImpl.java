@@ -18,7 +18,7 @@ import todo.domain.port.SendTodoAddedEventPort;
 import java.util.Optional;
 
 @ApplicationService
-public class TodoAddImpl implements AddTodo {
+public class AddTodoImpl implements AddTodo {
 
     private static final int MAX_NUMBER_OF_TODOS = 5; // application specific rule
 
@@ -26,7 +26,7 @@ public class TodoAddImpl implements AddTodo {
     private final SaveTodoListPort saveTodoListPort;
     private final SendTodoAddedEventPort sendTodoAddedEventPort;
 
-    public TodoAddImpl(
+    public AddTodoImpl(
             final LoadTodoListPort loadTodoListPort,
             final SaveTodoListPort saveTodoListPort,
             final SendTodoAddedEventPort sendTodoAddedEventPort

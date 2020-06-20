@@ -1,6 +1,7 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.7.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.springframework.boot' version '2.3.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.asciidoctor.convert' version '1.5.8'
     id 'java'
     id 'idea'
 }
@@ -9,7 +10,7 @@ apply from: 'gradle/test-architecture.gradle'
 apply from: 'gradle/test-acceptance.gradle'
 
 group 'ddd.example.todo'
-version '1.0-SNAPSHOT'
+version '1.0.0-SNAPSHOT'
 
 allprojects {
     repositories {
@@ -17,28 +18,50 @@ allprojects {
     }
 }
 
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
 dependencies {
     def dddBitsVersion = '0.0.1'
     def lombokVersion = '1.18.12'
 
     implementation "io.hschwentner.dddbits:dddbits:${dddBitsVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation "com.google.guava:guava:29.0-jre"
     implementation "javax.annotation:javax.annotation-api:1.3.2"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
+    // test
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
-
+    // acceptanceTest
     def cucumberVersion = '5.6.0'
     acceptanceTestImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
     acceptanceTestImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
     acceptanceTestImplementation "com.google.guava:guava:29.0-jre"
 
+    // architectureTest
     architectureTestImplementation "io.hschwentner.dddbits:dddbits:${dddBitsVersion}"
     architectureTestImplementation 'com.tngtech.archunit:archunit-junit4:0.13.1'
     architectureTestImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+}
+
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
 }

@@ -17,7 +17,10 @@ public class TodoId {
     }
 
     public static TodoId create(){
-        return new TodoId(UUID.randomUUID());
+        return of(UUID.randomUUID());
     }
 
+    public static TodoId of(final UUID id){
+        return new TodoId(id);
+    }
 }
