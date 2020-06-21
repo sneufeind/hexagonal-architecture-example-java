@@ -3,8 +3,8 @@ package todo.adapter.out.db;
 import common.architecture.Adapter;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
-import todo.domain.port.LoadTodoListPort;
-import todo.domain.port.SaveTodoListPort;
+import todo.domain.port.out.LoadTodoListPort;
+import todo.domain.port.out.SaveTodoListPort;
 
 import java.util.*;
 

@@ -11,9 +11,9 @@ import todo.domain.model.Todo;
 import todo.domain.model.TodoId;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
-import todo.domain.port.LoadTodoListPort;
-import todo.domain.port.SaveTodoListPort;
-import todo.domain.port.SendTodoAddedEventPort;
+import todo.domain.port.out.LoadTodoListPort;
+import todo.domain.port.out.SaveTodoListPort;
+import todo.domain.port.out.SendTodoAddedEventPort;
 
 import java.util.Optional;
 

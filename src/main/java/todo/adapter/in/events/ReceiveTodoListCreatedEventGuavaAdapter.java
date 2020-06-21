@@ -4,10 +4,8 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import common.architecture.Adapter;
 import common.eventbus.impl.AbstractEventReceiverImpl;
-import todo.domain.event.TodoDoneEvent;
 import todo.domain.event.TodoListCreatedEvent;
-import todo.domain.port.ReceiveTodoDoneEventPort;
-import todo.domain.port.ReceiveTodoListCreatedEventPort;
+import todo.domain.port.in.ReceiveTodoListCreatedEventPort;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

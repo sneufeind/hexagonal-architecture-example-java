@@ -10,7 +10,7 @@ import todo.application.usecase.AddTodo;
 import todo.application.usecase.CreateTodoList;
 import todo.application.usecase.GetTodoDone;
 import todo.application.usecase.ReadingTodos;
-import todo.domain.port.*;
+import todo.domain.port.out.*;
 
 @Configuration
 public class ApplicationConfig {

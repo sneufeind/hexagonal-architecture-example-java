@@ -1,4 +1,4 @@
-package todo.domain.port;
+package todo.domain.port.out;
 
 import java.util.Collection;
 import java.util.Optional;

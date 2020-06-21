@@ -4,7 +4,7 @@ import com.google.common.eventbus.EventBus;
 import common.architecture.Adapter;
 import common.eventbus.impl.EventPublisherImpl;
 import todo.domain.event.TodoAddedEvent;
-import todo.domain.port.SendTodoAddedEventPort;
+import todo.domain.port.out.SendTodoAddedEventPort;
 
 @Adapter
 public class SendTodoAddedEventGuavaAdapter extends EventPublisherImpl<TodoAddedEvent> implements SendTodoAddedEventPort {

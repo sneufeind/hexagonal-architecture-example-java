@@ -1,4 +1,4 @@
-package todo.domain.port;
+package todo.domain.port.in;
 
 import common.architecture.Port;
 import todo.domain.event.TodoListCreatedEvent;

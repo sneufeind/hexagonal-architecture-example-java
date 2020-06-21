@@ -5,7 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import common.architecture.Adapter;
 import common.eventbus.impl.AbstractEventReceiverImpl;
 import todo.domain.event.TodoDoneEvent;
-import todo.domain.port.ReceiveTodoDoneEventPort;
+import todo.domain.port.in.ReceiveTodoDoneEventPort;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

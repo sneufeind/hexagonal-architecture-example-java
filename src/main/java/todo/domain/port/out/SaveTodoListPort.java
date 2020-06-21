@@ -1,4 +1,4 @@
-package todo.domain.port;
+package todo.domain.port.out;
 
 import common.architecture.Port;
 import todo.domain.model.TodoList;

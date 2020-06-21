@@ -7,9 +7,9 @@ import todo.domain.event.TodoDoneEvent;
 import todo.domain.exception.UserDoesNotExistException;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
-import todo.domain.port.LoadTodoListPort;
-import todo.domain.port.SaveTodoListPort;
-import todo.domain.port.SendTodoDoneEventPort;
+import todo.domain.port.out.LoadTodoListPort;
+import todo.domain.port.out.SaveTodoListPort;
+import todo.domain.port.out.SendTodoDoneEventPort;
 
 import java.util.Optional;
 

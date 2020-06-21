@@ -10,7 +10,7 @@ import todo.domain.event.TodoListCreatedEvent;
 import todo.domain.exception.UserDoesNotExistException;
 import todo.domain.model.Todo;
 import todo.domain.model.UserId;
-import todo.domain.port.LoadTodoListPort;
+import todo.domain.port.out.LoadTodoListPort;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
