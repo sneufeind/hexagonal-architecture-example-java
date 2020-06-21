@@ -1,6 +1,6 @@
-# Daily Family Tradegy - a Hands on Domain Driven Design & Hexagonal Architecture
+# Daily Family Tradegy - a Hands on Domain Driven Design & Clean Architecture
 
-There are many different styles and interpretations of _Domain Driven Design_ (aka DDD) and the _Hexagonal Architecture_ (aka Onion Architecture aka Ports & Adapters) out there.
+There are many different styles and interpretations of _Domain Driven Design_ (aka DDD) and the _Clean Architecture_ out there.
 This example should be a proof of concept how these to concepts can fit together and how _DDD_ can lead us to a clean architecture that focuses on the business (domain).
 The intention here is not to find the best overall solution for anybody, but to find a good and clear way for me.
 
