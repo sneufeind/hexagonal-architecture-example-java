@@ -1,24 +1,22 @@
-package todo.infrastructure.adapter.events;
+package todo.adapter.in.events;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import common.architecture.Adapter;
 import common.eventbus.impl.AbstractEventReceiverImpl;
-import todo.domain.event.TodoDoneEvent;
-import todo.domain.event.TodoListCreatedEvent;
-import todo.domain.port.ReceiveTodoDoneEventPort;
-import todo.domain.port.ReceiveTodoListCreatedEventPort;
+import todo.domain.event.TodoAddedEvent;
+import todo.domain.port.ReceiveTodoAddedEventPort;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.function.Consumer;
 
 @Adapter
-public class ReceiveTodoListCreatedEventGuavaAdapter extends AbstractEventReceiverImpl<TodoListCreatedEvent> implements ReceiveTodoListCreatedEventPort {
+public class ReceiveTodoAddedEventGuavaAdapter extends AbstractEventReceiverImpl<TodoAddedEvent> implements ReceiveTodoAddedEventPort {
 
-    private final Consumer<TodoListCreatedEvent> eventConsumer;
+    private final Consumer<TodoAddedEvent> eventConsumer;
 
-    public ReceiveTodoListCreatedEventGuavaAdapter(final EventBus eventBus, final Consumer<TodoListCreatedEvent> eventConsumer){
+    public ReceiveTodoAddedEventGuavaAdapter(final EventBus eventBus, final Consumer<TodoAddedEvent> eventConsumer){
         super(eventBus);
         this.eventConsumer = eventConsumer;
         subscribeAfterInit(); // TODO should be solved via annotations -> use spring
@@ -36,7 +34,7 @@ public class ReceiveTodoListCreatedEventGuavaAdapter extends AbstractEventReceiv
 
     @Subscribe
     @Override
-    public void receive(final TodoListCreatedEvent event) {
+    public void receive(final TodoAddedEvent event) {
         this.eventConsumer.accept(event);
     }
 }

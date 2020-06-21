@@ -1,4 +1,4 @@
-package todo.infrastructure.adapter.web.model;
+package todo.adapter.in.rest.model;
 
 import todo.domain.model.TodoId;
 import todo.domain.model.UserId;

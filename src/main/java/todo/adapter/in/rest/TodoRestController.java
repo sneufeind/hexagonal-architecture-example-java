@@ -1,4 +1,4 @@
-package todo.infrastructure.adapter.web;
+package todo.adapter.in.rest;
 
 import common.architecture.Adapter;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import todo.adapter.in.rest.model.*;
 import todo.application.usecase.AddTodo;
 import todo.application.usecase.CreateTodoList;
 import todo.application.usecase.GetTodoDone;
@@ -20,7 +21,6 @@ import todo.domain.exception.TodoListAlreadyExistsException;
 import todo.domain.exception.UserDoesNotExistException;
 import todo.domain.model.Todo;
 import todo.domain.model.TodoId;
-import todo.infrastructure.adapter.web.model.*;
 
 import java.util.List;
 import java.util.function.Supplier;

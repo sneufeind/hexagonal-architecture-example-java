@@ -13,8 +13,8 @@ public enum PackageType {
     DOMAIN_ROOT("..domain"),
     DOMAIN_SERVICE("..domain.service"),
     DOMAIN_SERVICE_IMPL("..domain.service.impl"),
-    INFRASTRUCTURE_ROOT("..infrastructure"),
-    INFRASTRUCTURE_ADAPTER("..infrastructure.adapter"),
+    INFRASTRUCTURE_ROOT("..adapter"),
+    INFRASTRUCTURE_ADAPTER("..adapter"),
 
     JAVA_ROOT("java");
 

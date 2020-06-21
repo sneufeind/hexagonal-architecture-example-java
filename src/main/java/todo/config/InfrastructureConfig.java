@@ -4,10 +4,10 @@ import com.google.common.eventbus.EventBus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import todo.domain.port.*;
-import todo.infrastructure.adapter.db.TodoListListInMemoryRepository;
-import todo.infrastructure.adapter.events.SendTodoAddedEventGuavaAdapter;
-import todo.infrastructure.adapter.events.SendTodoDoneEventGuavaAdapter;
-import todo.infrastructure.adapter.events.SendTodoListCreatedEventGuavaAdapter;
+import todo.adapter.out.db.TodoListListInMemoryRepository;
+import todo.adapter.out.events.SendTodoAddedEventGuavaAdapter;
+import todo.adapter.out.events.SendTodoDoneEventGuavaAdapter;
+import todo.adapter.out.events.SendTodoListCreatedEventGuavaAdapter;
 
 @Configuration
 public class InfrastructureConfig {

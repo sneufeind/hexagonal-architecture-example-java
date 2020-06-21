@@ -1,4 +1,4 @@
-package todo.infrastructure.adapter.events;
+package todo.adapter.in.events;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;

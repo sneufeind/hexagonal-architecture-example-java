@@ -2,6 +2,7 @@ package todo.infrastructure.adapter.db;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import todo.adapter.out.db.TodoListListInMemoryRepository;
 import todo.domain.model.TodoList;
 import todo.domain.model.UserId;
 

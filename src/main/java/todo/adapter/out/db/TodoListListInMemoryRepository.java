@@ -1,4 +1,4 @@
-package todo.infrastructure.adapter.db;
+package todo.adapter.out.db;
 
 import common.architecture.Adapter;
 import todo.domain.model.TodoList;
