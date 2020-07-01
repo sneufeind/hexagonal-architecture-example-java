@@ -89,7 +89,7 @@ If do so, our application is very robust when we're updating dependencies or swi
 ## Testing
 Let's see, if our tests runs: `./gradlew clean cJ test accT`
 
-### Testing the Use Cases (using Cucunber)
+### Testing the Use Cases (using Cucumber)
 We are finding the acceptance tests based on _Gherkin & Cucumber_ under the path `src/test-acceptance`. The purpose of these tests is to make sure that the use cases that we implemented in the `application` layer working fine.
 
 To run the acceptance tests there is a gradle task under `gradle/test-acceptance.gradle`.
