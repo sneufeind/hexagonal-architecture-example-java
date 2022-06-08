@@ -18,12 +18,12 @@ The domain experts - the storrytellers - are telling a story about their domain 
 
 
 #### The Scenario
-A wife asks her husband to fix the clogged drain. The husband is a little absent-minded and forgets about it. After a while the wife asks her husband whether to task is done and the husband has to confess that he has forgotton the task. 
-That makes her angry and she gives her husband a complaint. 
-So the husband takes a heart and adds the todo to a todo list.
-As soon he has a little spare time he wants to get an overview about his undone todos. 
-When the todo is done, he get this todo done. 
-Finally, the wife and her husband are both very happy and still married...
+A wife asks her wife to fix the clogged drain. The wife is a little absent-minded and forgets about it. After a while the wife asks her wife whether the task is done and the wife has to confess that she has forgotten the task. 
+That makes her angry and she complains to her wife. 
+So the wife takes a heart and adds the todo to a todo list.
+As soon she has a little spare time she wants to get an overview about her open todos. 
+When the todo is done, she sets this todo to done. 
+Finally, the wife and her wife are both very happy and still married...
 
 ![Domain Storytelling](docs/domainstorytelling/Daily%20Family%20Tradegy.png)
 
