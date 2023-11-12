@@ -105,7 +105,7 @@ To run the architecture tests there is a gradle task under `gradle/test-architec
 | --- | --- | --- |
 | Domain Storrytelling | WPS Domain Storrytelling Modeler | https://www.wps.de/modeler/ |
 | Creating Diagrams | Draw.io | https://app.diagrams.net/ |
-| Event Stroming | Miro | https://miro.com/ |
+| Event Storming | Miro | https://miro.com/ |
 | UML Modelling | PlantUML | https://plantuml.com/ |
 
 Links:
